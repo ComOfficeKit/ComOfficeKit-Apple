@@ -1,0 +1,74 @@
+# The three samples consume ComOfficeKit exactly as you would: binary only,
+# downloaded from this repository's Releases. This builds every one of them for
+# each published release, with SwiftPM and with Xcode, on the oldest Xcode the
+# SDK supports and on the newest.
+name: Samples
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag: { description: "Release tag (defaults to the version in Package.swift)", required: false }
+permissions:
+  contents: read
+concurrency:
+  group: samples-${{ github.event.inputs.tag || github.event.release.tag_name || github.ref }}
+  cancel-in-progress: false
+jobs:
+  samples:
+    name: "${{ matrix.label }} (Xcode ${{ matrix.xcode }})"
+    runs-on: macos-26
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - xcode: "26.0.1"
+            label: "oldest supported"
+          - xcode: "26.6"
+            label: "current"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode ${{ matrix.xcode }}
+        run: |
+          set -euo pipefail
+          APP="/Applications/Xcode_${{ matrix.xcode }}.app"
+          if [ ! -d "$APP" ]; then
+            echo "::error::$APP is not on this runner image"
+            ls -d /Applications/Xcode_*.app || true
+            exit 1
+          fi
+          sudo xcode-select -s "$APP/Contents/Developer"
+          xcodebuild -version
+
+      # Xcode 26 is a BUILD requirement: older SDKs do not declare a runtime
+      # symbol these frameworks reference weakly, so they fail at link time.
+      - name: The SDK declares the symbols the frameworks reference
+        run: |
+          set -euo pipefail
+          TBD="$(xcrun --show-sdk-path)/usr/lib/swift/libswiftCore.tbd"
+          grep -q "_swift_coroFrameAlloc" "$TBD" || { echo "::error::this SDK is older than Xcode 26 and cannot link ComOfficeKit"; exit 1; }
+
+      - name: Fetch the release frameworks
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: Scripts/fetch-xcframeworks.sh ${{ github.event.inputs.tag || github.event.release.tag_name }}
+
+      - name: Build the samples with SwiftPM
+        run: |
+          set -euo pipefail
+          for s in Sample-EnterpriseBatch Sample-EmbedInApp Sample-Cookbook; do
+            (cd "Samples/$s" && swift build -c release)
+          done
+
+      - name: Build the samples with Xcode (no extra build settings)
+        shell: bash
+        run: |
+          set -euo pipefail
+          for s in Sample-EnterpriseBatch Sample-EmbedInApp Sample-Cookbook; do
+            log="$RUNNER_TEMP/xc-$s.log"
+            if ! (cd "Samples/$s" && xcodebuild -scheme "$s" -destination 'platform=macOS' -derivedDataPath "$RUNNER_TEMP/xc" CODE_SIGNING_ALLOWED=NO build) > "$log" 2>&1; then
+              grep -E 'error:' "$log" | head -20 || tail -30 "$log"
+              echo "::error::$s does not build through Xcode"; exit 1
+            fi
+            echo "$s: BUILD SUCCEEDED"
+          done

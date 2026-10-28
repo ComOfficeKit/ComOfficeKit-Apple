@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1000" viewBox="0 0 1920 1000" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#EEF3FA"/><stop offset="1" stop-color="#E4EBF5"/>
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="1000" fill="url(#bg)"/>
+
+  <!-- sold-frameworks group -->
+  <rect x="612" y="316" width="1258" height="656" fill="#D7D7D7"/>
+
+  <!-- left: descriptions -->
+  <g fill="#6E7A8A">
+    <rect x="44" y="44" width="472" height="248"/>
+    <rect x="44" y="360" width="472" height="248"/>
+    <rect x="44" y="676" width="472" height="248"/>
+  </g>
+  <g fill="#FFFFFF" font-size="34" text-anchor="middle">
+    <text x="280" y="140">Your app's UI — SwiftUI,</text>
+    <text x="280" y="186">AppKit or UIKit; three</text>
+    <text x="280" y="232">sample projects</text>
+
+    <text x="280" y="456">CoreText layout and</text>
+    <text x="280" y="502">CoreGraphics painters:</text>
+    <text x="280" y="548">pages · thumbnails · PDF</text>
+
+    <text x="280" y="750">Parsers, scene models,</text>
+    <text x="280" y="796">editors, writers, formulas,</text>
+    <text x="280" y="842">licence gate — no AppKit</text>
+  </g>
+
+  <!-- connectors left → middle -->
+  <g stroke="#3A3A3A" stroke-width="4">
+    <line x1="516" y1="168" x2="686" y2="168"/>
+    <line x1="516" y1="484" x2="686" y2="484"/>
+    <line x1="516" y1="800" x2="686" y2="800"/>
+  </g>
+
+  <!-- middle: layers -->
+  <rect x="686" y="44" width="472" height="248" fill="#E96B6B"/>
+  <rect x="686" y="360" width="472" height="248" fill="#E98E3E"/>
+  <rect x="686" y="676" width="472" height="248" fill="#2E45A8"/>
+  <g fill="#FFFFFF" text-anchor="middle">
+    <text x="922" y="182" font-size="42">APP &amp; SAMPLES</text>
+    <text x="922" y="498" font-size="42">APPLE RENDER</text>
+    <text x="922" y="786" font-size="42">DOCUMENT CORE</text>
+    <text x="922" y="836" font-size="24" fill="#DCE1F5">OOXMLDOM (libxml2) · SDKLicensing inside</text>
+  </g>
+
+  <!-- arrows middle → right -->
+  <g fill="#D0D0D0" stroke="#3A3A3A" stroke-width="4" stroke-linejoin="round">
+    <polygon points="1194,138 1250,138 1250,110 1300,168 1250,226 1250,198 1194,198"/>
+    <polygon points="1194,610 1250,610 1250,582 1300,640 1250,698 1250,670 1194,670"/>
+  </g>
+
+  <!-- right: what you get -->
+  <rect x="1330" y="44" width="472" height="248" fill="#6E7A8A"/>
+  <g fill="#FFFFFF" text-anchor="middle">
+    <text x="1566" y="150" font-size="38">Samples/</text>
+    <text x="1566" y="200" font-size="26" fill="#E6EAF0">EmbedInApp · EnterpriseBatch · Cookbook</text>
+    <text x="1566" y="238" font-size="26" fill="#E6EAF0">source, in this repository</text>
+  </g>
+
+  <rect x="1330" y="360" width="472" height="564" fill="#6E7A8A"/>
+  <g fill="#FFFFFF" text-anchor="middle">
+    <text x="1566" y="560" font-size="46">ComOfficeKit</text>
+    <text x="1566" y="626" font-size="28" fill="#E6EAF0">DocumentCore.xcframework</text>
+    <text x="1566" y="668" font-size="28" fill="#E6EAF0">AppleRender.xcframework</text>
+    <text x="1566" y="710" font-size="28" fill="#E6EAF0">fonts inside AppleRender</text>
+    <text x="1566" y="770" font-size="24" fill="#C9D1DC">binary · macOS 13+ · iOS 16+</text>
+    <text x="1566" y="806" font-size="24" fill="#C9D1DC">Swift Package (binaryTarget) or manual</text>
+  </g>
+</svg>
