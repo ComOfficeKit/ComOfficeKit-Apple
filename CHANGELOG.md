@@ -1,5 +1,42 @@
 # Changelog
 
+## 1.1.0 — 2026-10-29
+
+One new function, and pictures and links in a document's headers, footers and
+notes kept on save. The API only gains.
+
+- **New: `WorkbookSceneEditor.insertingChart(of:type:anchor:sheetIndex:in:)`.**
+  It inserts a chart of a range at an anchor, made as Excel makes one from a
+  selection:
+  - the range's first row names the series when it holds no number;
+  - its first column labels the categories when it holds none;
+  - there is a series for each column, or for each row when the range is wider
+    than it is tall;
+  - a text or empty cell plots as 0, and a date as its serial number;
+  - one named series gives the chart its title.
+
+  The chart holds the cells' values as they are, as an editor's Insert Chart
+  does, and it is the sheet's last chart. Every cell of the range is read, so
+  give the data's range rather than whole columns. The function returns `nil`
+  for a sheet that does not exist, for `.unsupported`, and for a range with no
+  number.
+- **A picture or a link in a header, a footer, a footnote or an endnote is kept
+  on save.**
+  - `WordSceneEditor.insertInlineImage` accepts a position in any of these
+    parts, but the writer wrote such a picture as an empty run. Each part's
+    pictures are now written with that part's own relationships.
+  - A link in these parts lost its address on save. That happened to one put
+    there with `insertHyperlink`, to one already there once its paragraph was
+    edited, and to one in an edited text box. All of these now keep it.
+- **A new picture no longer shares a drawing id with one an earlier save
+  wrote.** Each save numbered new pictures from the same id, and Word repairs a
+  document whose drawings share one. New ids now skip every id the package
+  holds.
+- **A picture or a link in a footnote or an endnote is read**, through the
+  notes' own relationships. A picture there was never shown before, and a link
+  had no address.
+- `DocumentEngine.version` reads `1.1.0`.
+
 ## 1.0.0 — 2026-10-28
 
 The first public release. From this version the API keeps to semantic versioning.

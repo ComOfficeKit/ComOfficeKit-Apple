@@ -6,7 +6,7 @@ Two binary frameworks, no LibreOffice, no server, no document ever leaves the
 device. The engine is production software, not a demo: it ships in a commercial
 application. ComOfficeKit packages it for licensing.
 
-> **Current release: 1.0.0** — what changed: [CHANGELOG](CHANGELOG.md).
+> **Current release: 1.1.0** — what changed: [CHANGELOG](CHANGELOG.md).
 > Try it free with the evaluation key below, no sign-up: [Free trial and licence](#free-trial-and-licence).
 
 ```swift
@@ -70,7 +70,7 @@ Plus a JSON snapshot of any DOCX (`WordDocumentSceneJSON`) for agents, search in
 | Platforms | macOS 13 or later · iOS 16 or later (device and simulator) |
 | Toolchain | **Xcode 26 or later** to BUILD against (Swift 6.2, macOS 26 SDK). Xcode 16 cannot link these binaries — see [Getting started](docs/getting-started.md#toolchain). This is a build requirement only; the platforms above are what your app can RUN on. |
 | Slices | `macos-arm64_x86_64`, `ios-arm64`, `ios-arm64_x86_64-simulator` |
-| Archives | `DocumentCore.xcframework.zip` 23.5 MB · `AppleRender.xcframework.zip` 9.3 MB, fonts included (dynamic frameworks; each slice carries its dSYM, which stays out of your app) |
+| Archives | `DocumentCore.xcframework.zip` 23.6 MB · `AppleRender.xcframework.zip` 9.3 MB, fonts included (dynamic frameworks; each slice carries its dSYM, which stays out of your app) |
 | Dependencies | none beyond Apple frameworks (`libxml2` from the SDK, CoreText, CoreGraphics, ImageIO, Security for the Keychain) |
 | Network | **none, ever.** Licences are signed and verified on the device |
 | Sandbox | fine: all ZIP and XML work is in-process, and the licence is verified on the device, so no network-client entitlement is needed |
@@ -81,7 +81,7 @@ Swift Package Manager:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/ComOfficeKit/ComOfficeKit-Apple.git", from: "1.0.0"),
+    .package(url: "https://github.com/ComOfficeKit/ComOfficeKit-Apple.git", from: "1.1.0"),
 ],
 targets: [
     .target(name: "YourApp", dependencies: [
@@ -102,7 +102,7 @@ Details, the manual Xcode route, command-line tools and a project checklist:
 [Getting started](docs/getting-started.md).
 
 Prefer a folder you can vendor? Each release also attaches
-`ComOfficeKit-1.0.0.zip`: the frameworks, the fonts, the documentation and
+`ComOfficeKit-1.1.0.zip`: the frameworks, the fonts, the documentation and
 the samples, with a `Package.swift` that refers to the frameworks by path. As a
 path dependency it is named after its folder, `ComOfficeKit`, which is the
 `package:` name the guides in `docs/` use.
