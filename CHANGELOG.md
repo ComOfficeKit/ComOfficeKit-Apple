@@ -1,5 +1,112 @@
 # Changelog
 
+## 1.3.0 — 2026-10-31
+
+Two new table edits, East Asian text laid out in its own font, and Word's
+character styles, embedded objects and SmartArt laid out and drawn. There was no
+1.2.0 release of these frameworks: its changes ship here, listed after 1.3.0's
+own. The API only gains.
+
+- **New: `WordSceneEditor.deleteTable(atParagraph:in:)`.** It deletes the table
+  that holds the paragraph, as Word does when Delete Rows takes a table's only
+  row, or Delete Columns its only column:
+  - it acts on the top-level body table, as the row and column edits do, so a
+    paragraph in a nested table takes its outer table;
+  - the caret lands at the start of what follows the table, else at the end of
+    what comes before it. A table that was the body's only element leaves an
+    empty paragraph for it;
+  - every other element is written as it was.
+
+  It returns `nil` when the paragraph is not in a cell of a top-level body
+  table. `deleteTableRow` and `deleteTableColumn` are unchanged: they still
+  return `nil` for a table's only row and only column, and the host decides when
+  to delete the table instead.
+- **A Word run's East Asian text is laid out in its East Asian font, and theme
+  fonts are read.** Word draws a run's Latin text in its ASCII font and its
+  Chinese, Japanese and Korean text in its East Asian font, each inherited on its
+  own through the styles (ECMA-376 Part 1, §17.3.2.26). Before, a run kept one
+  family, and fonts named only through the theme were never read. Such a
+  document was laid out in Helvetica Neue, and its CJK text in the system's
+  fallback font. Now:
+  - each character takes its run's Latin or East Asian font, by its Unicode
+    range and the run's `w:hint`;
+  - theme fonts are resolved, with the theme's East Asian face, its per-script
+    faces and the document's `w:themeFontLang`;
+  - a font drawn in place of one the Mac does not have keeps that font's line
+    height, for the fonts documents commonly name;
+  - a style that sets nothing but its theme fonts keeps them, and character
+    styles are read with the theme.
+- **A slide table without a table style draws none.** A table with no
+  `<a:tableStyleId>`, as Google Slides and WPS write them, was drawn in a
+  built-in style, often in the deck's blue. So was a table whose style id the
+  file does not define. Both now draw only their cells' own fills and borders.
+  A border that is wholly transparent is none.
+- `DocumentEngine.version` reads `1.3.0`.
+
+From the engine's 1.2.0:
+
+- **New: `WordSceneEditor.movingTableColumnBorder(rightOfCellContaining:byTwips:in:)`.**
+  It moves the border on the right of a table cell, as dragging that border in
+  Word does:
+  - inside the table, the column on the border's left takes the width the
+    column on its right gives, so the table keeps its width;
+  - at the table's right edge, the last column changes, and so does the table's
+    width when it is fixed or a share of the page;
+  - no column becomes narrower than 0.1" (144 twips): a move that would make one
+    narrower stops there.
+
+  The grid and the width of every cell over a changed column are rewritten; the
+  rest of the table is written as it was. The function returns `nil` outside a
+  cell of a top-level table, for a table without a grid, and when the border
+  cannot move.
+- **`WordSceneEditor.deleteRange` deletes the ranges it returned `nil` for:** a
+  range over more than one paragraph of a table cell, a header, a footer or a
+  note; a range from one cell into another, or into or out of a table; and a
+  range over a table. It deletes the text `selectedText` reads for the range:
+  - a table wholly inside the range goes with it;
+  - cells and rows stay, and a cell the range empties keeps one paragraph,
+    without its text;
+  - the range's ends join when they are in the same cell or the same part, and
+    not across cells.
+
+  A range inside one paragraph of a header, a footer or a note is deleted too. A
+  range from one part into another (the body into a header) is still `nil`, and
+  so is `deleteRangeTracked` across cells.
+- **Adding or removing a table row or column keeps the table's properties.**
+  `insertTableRow`, `deleteTableRow`, `insertTableColumn` and
+  `deleteTableColumn` wrote the edited table without its own properties: its
+  style, alignment, indent and cell margins, and the borders its style gave it.
+  They are now kept. When a column is added or removed, a table of fixed width
+  takes the new grid's width; a width given as a share of the page stays a share.
+- **A slide's chart is read with the presentation's theme.** A series the chart
+  part colours from the theme (`<a:schemeClr>`, as PowerPoint writes it) now has
+  that colour; it had none, and the chart fell back to the default palette.
+- **A Word document's embedded objects show their picture.** `<w:object>` was
+  skipped. Its preview picture is now read: as its run's picture when the object
+  is in line, and as a floating picture when its shape is positioned.
+- **Word SmartArt and VML shape groups are laid out and drawn.** A SmartArt's
+  drawing part and a VML group are read as shapes, each with its outline, fill
+  and text. A drawing in line with the text keeps a box on its line, as a
+  picture does, and its shapes are laid out in it; the page painters draw them.
+  Before, they took no room, and what followed moved up. New public API for a
+  host that draws a `WordLayout` itself: `WordLayoutLine.shapes`,
+  `WordLayoutShape.geometry` and `WordShapeGeometry`.
+- **Word character styles are laid out.** A run's character style
+  (`<w:rStyle>`) is laid under the run's own formatting and over its paragraph
+  style's, Word's order, in the body, tables, headers, footers, notes and text
+  boxes: a hyperlink is blue and underlined. Only paragraph styles were read, so
+  links came out black and plain. With it:
+  - a table of contents' entries are laid out in their TOC styles, as Word's
+    print layout shows them;
+  - `<w:color w:val="auto"/>` is a colour: a link written black stays black;
+  - a run in a styled paragraph keeps its own character spacing, and a style's
+    spacing applies;
+  - a table in a text box is styled as a table in the body is.
+
+  A run changed with `WordRunFormatting`'s setters (`settingBold(_:)` and the
+  others) keeps its character style and its automatic colour, and the writer
+  writes both. `settingColor(_:)` replaces an automatic colour.
+
 ## 1.1.0 — 2026-10-29
 
 One new function, and pictures and links in a document's headers, footers and

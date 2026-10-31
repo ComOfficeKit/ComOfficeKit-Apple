@@ -1,9 +1,9 @@
 // swift-tools-version:5.9
-// ComOfficeKit 1.1.0. Both products are binary targets: SwiftPM downloads
+// ComOfficeKit 1.3.0. Both products are binary targets: SwiftPM downloads
 // them from this repository's Releases and verifies them by checksum.
 import PackageDescription
 
-let version = "1.1.0"
+let version = "1.3.0"
 let base = "https://github.com/ComOfficeKit/ComOfficeKit-Apple/releases/download/\(version)"
 
 let package = Package(
@@ -14,7 +14,7 @@ let package = Package(
         .library(name: "AppleRender", targets: ["AppleRender"]),
     ],
     targets: [
-        .binaryTarget(name: "DocumentCore", url: "\(base)/DocumentCore.xcframework.zip", checksum: "f2d2599701a67b3585cd23f3308de970b758a92ec37cec7660fd28b9f2c39199"),
-        .binaryTarget(name: "AppleRender", url: "\(base)/AppleRender.xcframework.zip", checksum: "2629ae9114974b22139fcec823480553e53da1d7846e12b8ce5fc415b350b909"),
+        .binaryTarget(name: "DocumentCore", url: "\(base)/DocumentCore.xcframework.zip", checksum: "ed0affc1332f6d46f94120d9e183043d4a1f78c81e8caba03eca00c8d1189500"),
+        .binaryTarget(name: "AppleRender", url: "\(base)/AppleRender.xcframework.zip", checksum: "40e2cd4698b57b265c01abe3343b32722a7973b160a601c1b471d1913768245e"),
     ]
 )
