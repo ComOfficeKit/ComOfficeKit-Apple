@@ -1,4 +1,4 @@
-# The three samples consume ComOfficeKit exactly as you would: binary only,
+# The three samples consume ComOffice exactly as you would: binary only,
 # downloaded from this repository's Releases. This builds every one of them for
 # each published release, with SwiftPM and with Xcode, on the oldest Xcode the
 # SDK supports and on the newest.
@@ -47,7 +47,7 @@ jobs:
         run: |
           set -euo pipefail
           TBD="$(xcrun --show-sdk-path)/usr/lib/swift/libswiftCore.tbd"
-          grep -q "_swift_coroFrameAlloc" "$TBD" || { echo "::error::this SDK is older than Xcode 26 and cannot link ComOfficeKit"; exit 1; }
+          grep -q "_swift_coroFrameAlloc" "$TBD" || { echo "::error::this SDK is older than Xcode 26 and cannot link ComOffice"; exit 1; }
 
       - name: Fetch the release frameworks
         env: { GH_TOKEN: "${{ github.token }}" }

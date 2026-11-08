@@ -1,6 +1,6 @@
 # Migration notes
 
-ComOfficeKit follows semantic versioning.
+ComOffice follows semantic versioning.
 
 - **0.9.x** — pre-release. The public surface is frozen by tooling (a symbol
   inventory and a signature-level digest are both gated in the engine's CI),

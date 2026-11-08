@@ -12,10 +12,16 @@ enum ConversionRecipes {
         RenderingRecipes.registerFonts()
         var failures: [(URL, Error)] = []
         let files = try FileManager.default.contentsOfDirectory(at: folder, includingPropertiesForKeys: nil)
-        for file in files where ["docx", "xlsx", "xlsm", "pptx"].contains(file.pathExtension.lowercased()) {
+            .filter { ["docx", "xlsx", "xlsm", "pptx"].contains($0.pathExtension.lowercased()) }
+        // report.docx → report.pdf. When report.xlsx is there too, both keep their extension
+        // (report.docx.pdf, report.xlsx.pdf), so one PDF never overwrites another.
+        let stems = Dictionary(grouping: files) { $0.deletingPathExtension().lastPathComponent.lowercased() }
+        for file in files {
+            let stem = file.deletingPathExtension().lastPathComponent
+            let name = (stems[stem.lowercased()]?.count ?? 0) > 1 ? file.lastPathComponent : stem
             do {
                 let doc = try RenderingRecipes.open(file)
-                let pdf = output.appendingPathComponent(file.deletingPathExtension().lastPathComponent + ".pdf")
+                let pdf = output.appendingPathComponent(name + ".pdf")
                 try DocumentRenderer.pdfData(of: doc).write(to: pdf)
             } catch {
                 failures.append((file, error))

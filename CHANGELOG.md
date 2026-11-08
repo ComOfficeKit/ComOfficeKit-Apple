@@ -1,5 +1,43 @@
 # Changelog
 
+## Unreleased
+
+## 1.6.0 — 2026-11-08
+
+Spreadsheets, slides and Word documents print and export to PDF more as Office draws them, and the SDK is now
+called ComOffice. These frameworks had no 1.4.0 or 1.5.0 release: those versions shipped for Windows and Linux, and
+their one change on Apple platforms, the licence messages' new name, is listed here. The API is unchanged.
+
+- **Rows that Excel sized to their contents keep their height.** A row whose height the file gives without
+  `customHeight` was laid out at the sheet's default height. It now has the height Excel saved: in
+  `RowProperties.heightPt`, in `SpreadsheetPaginator`'s row heights, and in page images and PDFs, so pages break
+  where Excel's do. Saving is unchanged.
+- **A merged range's outline** is drawn from the borders of the cells along each of its sides. A merged range that a
+  page break splits keeps its outline on both pages.
+- **A picture's outline on a slide** is drawn over the picture, not under it.
+- **East Asian vertical text** (`eaVert`): Chinese, Japanese and Korean characters stand upright, in the font's
+  vertical forms.
+- **Kaiti TC and Songti TC**, when a Word document names them, keep their own 1.4 em line height, as Word lays them
+  out. They were laid out at 1.15 and 1.20 em, so such a document can now have more pages.
+- **Samples: a folder conversion no longer overwrites a PDF.** `batch convert`
+  (Sample-EnterpriseBatch) named every PDF after its document without the
+  extension, so `report.docx` and `report.xlsx` both became `report.pdf`, and so
+  did a `report.docx` in a subfolder, while the count still said every file was
+  converted. Each PDF now keeps its document's place under the folder
+  (`sub/report.docx` → `sub/report.pdf`), and two documents that would make the
+  same PDF keep their extension (`report.docx.pdf`, `report.xlsx.pdf`). The
+  `convertFolder` recipe in [Batch and server-side use](docs/guide-batch.md) and
+  the cookbook does the same for one folder.
+
+**The name.** The SDK is now called ComOffice. The Swift package `ComOfficeKit`, its products `DocumentCore` and
+`AppleRender`, and every module, type and file name keep their names, so nothing in your code or your project
+changes. What the SDK writes for readers says ComOffice where it said ComOfficeKit:
+
+- the licence errors' descriptions, which now start "ComOffice: ";
+- the API documentation.
+
+If your code reads an error's description, match the `SDKLicense.SDKLicenseError` case instead: the cases have not changed.
+
 ## 1.3.0 — 2026-10-31
 
 Two new table edits, East Asian text laid out in its own font, and Word's

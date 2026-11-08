@@ -42,14 +42,14 @@ enum LicenceRecipes {
     /// can produce, and the one your UI answers with a licence prompt.
     static func userMessage(for error: SDKLicense.SDKLicenseError) -> String {
         switch error {
-        case .notActivated: return "Enter your ComOfficeKit licence to open Office documents."
+        case .notActivated: return "Enter your ComOffice licence to open Office documents."
         case .invalidKey: return "That licence is not valid. Paste the whole licence from your contract email, or choose the licence file."
         case .wrongProduct: return "That licence was issued for a different product."
         case .expired: return "That licence has expired. Contact sales to renew it."
         case .platformMismatch: return "That licence does not cover this platform. Ask sales for one that includes it."
         case .bundleIDMismatch: return "That licence is for another app. Check this app's bundle identifier with sales."
         case .featureNotLicensed: return "Your licence does not include this. Ask sales to add it."
-        case .versionNotLicensed: return "Your licence does not cover this version of ComOfficeKit."
+        case .versionNotLicensed: return "Your licence does not cover this version of ComOffice."
         case .noVerificationKey: return "This build cannot check licences. Contact support."
         @unknown default: return error.description
         }

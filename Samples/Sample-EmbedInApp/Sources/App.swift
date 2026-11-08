@@ -9,7 +9,7 @@ import AppleRender
 
 @main
 struct EmbedInApp: App {
-    var body: some Scene { WindowGroup("ComOfficeKit — EmbedInApp") { ViewerWindow() } }
+    var body: some Scene { WindowGroup("ComOffice — EmbedInApp") { ViewerWindow() } }
 }
 
 struct OpenDocument: Identifiable {
@@ -128,7 +128,7 @@ struct ViewerWindow: View {
         }
         .sheet(isPresented: $model.showLicence) {
             VStack(alignment: .leading, spacing: 12) {
-                Text("ComOfficeKit licence").font(.headline)
+                Text("ComOffice licence").font(.headline)
                 Text("State: \(String(describing: model.licenceState))").foregroundStyle(.secondary)
                 TextField("Paste the licence", text: $key).textFieldStyle(.roundedBorder)
                 HStack { Button("Choose File…") { model.chooseLicenceFile() }; Spacer(); Button("Cancel") { model.showLicence = false }; Button("Activate") { model.activate(key) }.keyboardShortcut(.defaultAction) }

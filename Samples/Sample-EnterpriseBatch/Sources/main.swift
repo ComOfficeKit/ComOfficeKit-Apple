@@ -110,10 +110,21 @@ do {
         try FileManager.default.createDirectory(at: outDir, withIntermediateDirectories: true)
         let files = (FileManager.default.enumerator(at: dir, includingPropertiesForKeys: nil)?.allObjects as? [URL] ?? [])
             .filter { ["docx", "xlsx", "xlsm", "pptx"].contains($0.pathExtension.lowercased()) }
+        // Each PDF keeps its document's place under <dir>: sub/report.docx → <outdir>/sub/report.pdf.
+        // Two documents that would make the same PDF (report.docx and report.xlsx in one folder) keep
+        // their extension instead, report.docx.pdf and report.xlsx.pdf, so no PDF overwrites another.
+        let root = dir.resolvingSymlinksInPath().path
+        func relative(_ file: URL) -> String {
+            String(file.resolvingSymlinksInPath().path.dropFirst(root.count)).trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+        }
+        let stems = Dictionary(grouping: files) { (relative($0) as NSString).deletingPathExtension.lowercased() }
         var failed = 0
         for file in files {
-            let out = outDir.appendingPathComponent(file.deletingPathExtension().lastPathComponent + ".pdf")
+            let path = relative(file)
+            let stem = (path as NSString).deletingPathExtension
+            let out = outDir.appendingPathComponent(((stems[stem.lowercased()]?.count ?? 0) > 1 ? path : stem) + ".pdf")
             do {
+                try FileManager.default.createDirectory(at: out.deletingLastPathComponent(), withIntermediateDirectories: true)
                 let pages = try renderToPDF(file, to: out)
                 print("ok   \(file.lastPathComponent) (\(pages) p)")
             } catch {

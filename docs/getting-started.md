@@ -4,7 +4,7 @@ Ten minutes from an empty target to a rendered page.
 
 ## 1. Add the package
 
-You received ComOfficeKit as a self-contained folder. Put it beside your
+You received ComOffice as a self-contained folder. Put it beside your
 project and depend on it **by path** — nothing is downloaded, there are no
 credentials, and no network is touched at build time.
 
@@ -47,7 +47,7 @@ Undefined symbols for architecture arm64:
 That error names an internal type and reads like a broken release. It is not:
 it means the toolchain is below the floor.
 
-Measured, not assumed — every ComOfficeKit release is built by all three
+Measured, not assumed — every ComOffice release is built by all three
 samples on both ends of the supported range:
 
 | Xcode | Swift | macOS SDK | Result |

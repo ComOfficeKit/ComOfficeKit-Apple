@@ -63,7 +63,7 @@
 
   <rect x="1330" y="360" width="472" height="564" fill="#6E7A8A"/>
   <g fill="#FFFFFF" text-anchor="middle">
-    <text x="1566" y="560" font-size="46">ComOfficeKit</text>
+    <text x="1566" y="560" font-size="46">ComOffice</text>
     <text x="1566" y="626" font-size="28" fill="#E6EAF0">DocumentCore.xcframework</text>
     <text x="1566" y="668" font-size="28" fill="#E6EAF0">AppleRender.xcframework</text>
     <text x="1566" y="710" font-size="28" fill="#E6EAF0">fonts inside AppleRender</text>

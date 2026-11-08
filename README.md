@@ -1,12 +1,12 @@
-# ComOfficeKit
+# ComOffice for Apple platforms
 
 **Native DOCX · XLSX · PPTX for Apple platforms.** Parse, inspect, edit, save
 and render Office documents from Swift — in-process, offline, on macOS and iOS.
 Two binary frameworks, no LibreOffice, no server, no document ever leaves the
 device. The engine is production software, not a demo: it ships in a commercial
-application. ComOfficeKit packages it for licensing.
+application. ComOffice packages it for licensing.
 
-> **Current release: 1.3.0** — what changed: [CHANGELOG](CHANGELOG.md).
+> **Current release: 1.6.0** — what changed: [CHANGELOG](CHANGELOG.md).
 > Try it free with the evaluation key below, no sign-up: [Free trial and licence](#free-trial-and-licence).
 
 ```swift
@@ -24,7 +24,7 @@ let pdf   = try DocumentRenderer.pdfData(of: doc)                   // vector PD
 
 ## Architecture
 
-![ComOfficeKit architecture: your app and the samples on top; AppleRender (CoreText layout, CoreGraphics painters) and DocumentCore (parsers, scene models, editors, writers, formulas, licence gate) ship as the two binary frameworks](docs/images/architecture.svg)
+![ComOffice architecture: your app and the samples on top; AppleRender (CoreText layout, CoreGraphics painters) and DocumentCore (parsers, scene models, editors, writers, formulas, licence gate) ship as the two binary frameworks](docs/images/architecture.svg)
 
 Two binary frameworks and the source you build on top of them:
 
@@ -57,7 +57,7 @@ Plus a JSON snapshot of any DOCX (`WordDocumentSceneJSON`) for agents, search in
 
 | Approach | Documents leave the device | Needs a server or install | Works offline | Renders in your UI | Edits round-trip the original file |
 |---|---|---|---|---|---|
-| **ComOfficeKit** | no | no | yes | yes (CGImage / PDF) | yes, byte-preserving |
+| **ComOffice** | no | no | yes | yes (CGImage / PDF) | yes, byte-preserving |
 | Cloud conversion API | yes | yes | no | no | usually re-generates the file |
 | LibreOffice headless | no | yes (hundreds of MB, a process to manage) | yes | no (files only) | re-generates the file |
 | Web viewer / Office Online | yes | yes | no | in a web view | n/a |
@@ -70,7 +70,7 @@ Plus a JSON snapshot of any DOCX (`WordDocumentSceneJSON`) for agents, search in
 | Platforms | macOS 13 or later · iOS 16 or later (device and simulator) |
 | Toolchain | **Xcode 26 or later** to BUILD against (Swift 6.2, macOS 26 SDK). Xcode 16 cannot link these binaries — see [Getting started](docs/getting-started.md#toolchain). This is a build requirement only; the platforms above are what your app can RUN on. |
 | Slices | `macos-arm64_x86_64`, `ios-arm64`, `ios-arm64_x86_64-simulator` |
-| Archives | `DocumentCore.xcframework.zip` 24.7 MB · `AppleRender.xcframework.zip` 9.7 MB, fonts included (dynamic frameworks; each slice carries its dSYM, which stays out of your app) |
+| Archives | `DocumentCore.xcframework.zip` 24.8 MB · `AppleRender.xcframework.zip` 10.2 MB, fonts included (dynamic frameworks; each slice carries its dSYM, which stays out of your app) |
 | Dependencies | none beyond Apple frameworks (`libxml2` from the SDK, CoreText, CoreGraphics, ImageIO, Security for the Keychain) |
 | Network | **none, ever.** Licences are signed and verified on the device |
 | Sandbox | fine: all ZIP and XML work is in-process, and the licence is verified on the device, so no network-client entitlement is needed |
@@ -81,7 +81,7 @@ Swift Package Manager:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/ComOfficeKit/ComOfficeKit-Apple.git", from: "1.3.0"),
+    .package(url: "https://github.com/ComOfficeKit/ComOfficeKit-Apple.git", from: "1.6.0"),
 ],
 targets: [
     .target(name: "YourApp", dependencies: [
@@ -102,20 +102,20 @@ Details, the manual Xcode route, command-line tools and a project checklist:
 [Getting started](docs/getting-started.md).
 
 Prefer a folder you can vendor? Each release also attaches
-`ComOfficeKit-1.3.0.zip`: the frameworks, the fonts, the documentation and
+`ComOfficeKit-1.6.0.zip`: the frameworks, the fonts, the documentation and
 the samples, with a `Package.swift` that refers to the frameworks by path. As a
 path dependency it is named after its folder, `ComOfficeKit`, which is the
 `package:` name the guides in `docs/` use.
 
 ## Free trial and licence
 
-ComOfficeKit is commercial software, quoted and licensed by our sales team.
+ComOffice is commercial software, quoted and licensed by our sales team.
 Every release also publishes a free evaluation key, so you can try the whole
 SDK without signing up.
 
 1. **How long.** The key below unlocks everything — DOCX, XLSX and PPTX,
-   rendering and the formula engine — until **2027-01-01** at 00:00 UTC,
-   about 60 days after this release. It names no app, so it also works in
+   rendering and the formula engine — until **2027-01-01** at 00:00 UTC.
+   It names no app, so it also works in
    command-line tools and test runners. A later release publishes a new key.
 
    ```text
@@ -184,5 +184,5 @@ All three consume the SDK exactly as a licensee does: binary only, no source. Th
 ## Versioning, licensing, support
 
 - **Versions** follow semantic versioning from 1.0; 0.9.x is the pre-release series (see [Migration notes](docs/migration/README.md)). Each release names the engine tag it was built from.
-- **Licence.** ComOfficeKit is commercial software, licensed, not sold, by the company named in the [Service Terms](https://comofficekit.com/service-terms/); it is not open source — see [LICENSE.md](LICENSE.md). Evaluate with the key in [Free trial and licence](#free-trial-and-licence); for a production licence, email sales@comofficekit.com.
+- **Licence.** ComOffice is commercial software, licensed, not sold, by the company named in the [Service Terms](https://comofficekit.com/service-terms/); it is not open source — see [LICENSE.md](LICENSE.md). Evaluate with the key in [Free trial and licence](#free-trial-and-licence); for a production licence, email sales@comofficekit.com.
 - **Support:** support@comofficekit.com

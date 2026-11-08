@@ -1,6 +1,6 @@
 # Licensing
 
-ComOfficeKit is licensed annually per product, quoted and delivered by a
+ComOffice is licensed annually per product, quoted and delivered by a
 sales team. There is no store and no self-serve purchase, so there is nothing
 to activate against: **your licence comes with your contract, as a licence
 string or as a licence file that carries one, and the SDK verifies it on the
@@ -92,7 +92,7 @@ Every failure is a typed `SDKLicense.SDKLicenseError`:
 | Case | Meaning | What to show |
 |---|---|---|
 | `.notActivated` | no licence active in this process or storage scope | your licence entry UI |
-| `.invalidKey` | not a ComOfficeKit licence, or altered since it was issued | "paste the whole licence from your contract email, or choose the licence file" |
+| `.invalidKey` | not a ComOffice licence, or altered since it was issued | "paste the whole licence from your contract email, or choose the licence file" |
 | `.wrongProduct` | a valid licence for another product | "check the licence" |
 | `.expired` | the licence's date has passed | "contact sales to renew" |
 | `.platformMismatch` | the licence does not cover this platform | "ask sales for a licence that includes it" |
