@@ -6,7 +6,7 @@ Two binary frameworks, no LibreOffice, no server, no document ever leaves the
 device. The engine is production software, not a demo: it ships in a commercial
 application. ComOffice packages it for licensing.
 
-> **Current release: 1.6.0** — what changed: [CHANGELOG](CHANGELOG.md).
+> **Current release: 1.8.0** — what changed: [CHANGELOG](CHANGELOG.md).
 > Try it free with the evaluation key below, no sign-up: [Free trial and licence](#free-trial-and-licence).
 
 ```swift
@@ -81,7 +81,7 @@ Swift Package Manager:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/ComOfficeKit/ComOfficeKit-Apple.git", from: "1.6.0"),
+    .package(url: "https://github.com/ComOfficeKit/ComOfficeKit-Apple.git", from: "1.8.0"),
 ],
 targets: [
     .target(name: "YourApp", dependencies: [
@@ -102,7 +102,7 @@ Details, the manual Xcode route, command-line tools and a project checklist:
 [Getting started](docs/getting-started.md).
 
 Prefer a folder you can vendor? Each release also attaches
-`ComOfficeKit-1.6.0.zip`: the frameworks, the fonts, the documentation and
+`ComOfficeKit-1.8.0.zip`: the frameworks, the fonts, the documentation and
 the samples, with a `Package.swift` that refers to the frameworks by path. As a
 path dependency it is named after its folder, `ComOfficeKit`, which is the
 `package:` name the guides in `docs/` use.

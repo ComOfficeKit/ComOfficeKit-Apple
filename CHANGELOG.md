@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+## 1.8.0 — 2026-11-14
+
+Chinese, Japanese and Korean Word documents, and decks that use preset colours, are laid out and drawn more as
+Office does. These frameworks had no 1.7.0 release: its changes are here. The API is unchanged. The evaluation key
+in the README works until 2027-01-01.
+
+- **Chinese, Japanese and Korean lines at Word's height.** When a Word document names a font from Windows or Office,
+  such as 新細明體 (PMingLiU), 標楷體, 宋体 (SimSun), 微軟正黑體 or MS 明朝, its lines are set at the height Word gives
+  them: 1.3 times the font's Windows height, where no document grid sets the lines. They were set at the font file's
+  own line height, about 8 to 23 percent shorter, so such a document can now have more pages, nearer Word's count.
+  The Mac's own Chinese families (PingFang, Songti, Kaiti) keep their 1.4 em.
+- **Preset colours in decks.** Preset colours (`<a:prstClr>`, which PowerPoint writes for many shadows) are read
+  wherever a deck uses them: in shadows, text, fills and charts. Shadows, white text and black fills that were
+  missing now appear.
+
 ## 1.6.0 — 2026-11-08
 
 Spreadsheets, slides and Word documents print and export to PDF more as Office draws them, and the SDK is now
