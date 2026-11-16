@@ -2,7 +2,7 @@
 
 Copyright © 2026 KDAN Mobile Software Ltd. and its licensors. All rights reserved.
 
-ComOfficeKit — its frameworks and the fonts inside them, documentation and samples — is
+ComOfficeKit — its frameworks and the fonts inside them, and its documentation — is
 proprietary software. It is licensed, not sold, and it is not open source. It
 may not be resold or redistributed except as a licence agreement permits.
 
@@ -15,6 +15,11 @@ Your use of ComOfficeKit is governed by one of these:
   release. Evaluation is
   for trying the SDK only, not for any application or service that is
   distributed, sold or put into production.
+
+The samples published with ComOfficeKit, in `Samples/`, are the exception:
+their source code is under the MIT License, in `Samples/LICENSE`, so you may
+copy it into your own code. The SDK the samples call is not: using it is
+governed by the terms above.
 
 Unauthorised reproduction or distribution may result in civil and criminal
 liability. This notice must not be removed.

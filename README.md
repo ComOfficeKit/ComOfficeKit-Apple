@@ -1,12 +1,13 @@
 # ComOffice for Apple platforms
 
 **Native DOCX · XLSX · PPTX for Apple platforms.** Parse, inspect, edit, save
-and render Office documents from Swift — in-process, offline, on macOS and iOS.
+and render Office documents, and convert them to PDF, from Swift — in-process,
+offline, on macOS and iOS.
 Two binary frameworks, no LibreOffice, no server, no document ever leaves the
 device. The engine is production software, not a demo: it ships in a commercial
 application. ComOffice packages it for licensing.
 
-> **Current release: 1.8.0** — what changed: [CHANGELOG](CHANGELOG.md).
+> **Current release: 1.9.0** — what changed: [CHANGELOG](CHANGELOG.md).
 > Try it free with the evaluation key below, no sign-up: [Free trial and licence](#free-trial-and-licence).
 
 ```swift
@@ -70,7 +71,7 @@ Plus a JSON snapshot of any DOCX (`WordDocumentSceneJSON`) for agents, search in
 | Platforms | macOS 13 or later · iOS 16 or later (device and simulator) |
 | Toolchain | **Xcode 26 or later** to BUILD against (Swift 6.2, macOS 26 SDK). Xcode 16 cannot link these binaries — see [Getting started](docs/getting-started.md#toolchain). This is a build requirement only; the platforms above are what your app can RUN on. |
 | Slices | `macos-arm64_x86_64`, `ios-arm64`, `ios-arm64_x86_64-simulator` |
-| Archives | `DocumentCore.xcframework.zip` 24.8 MB · `AppleRender.xcframework.zip` 10.2 MB, fonts included (dynamic frameworks; each slice carries its dSYM, which stays out of your app) |
+| Archives | `DocumentCore.xcframework.zip` 24.8 MB · `AppleRender.xcframework.zip` 10.4 MB, fonts included (dynamic frameworks; each slice carries its dSYM, which stays out of your app) |
 | Dependencies | none beyond Apple frameworks (`libxml2` from the SDK, CoreText, CoreGraphics, ImageIO, Security for the Keychain) |
 | Network | **none, ever.** Licences are signed and verified on the device |
 | Sandbox | fine: all ZIP and XML work is in-process, and the licence is verified on the device, so no network-client entitlement is needed |
@@ -81,7 +82,7 @@ Swift Package Manager:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/ComOfficeKit/ComOfficeKit-Apple.git", from: "1.8.0"),
+    .package(url: "https://github.com/ComOfficeKit/ComOfficeKit-Apple.git", from: "1.9.0"),
 ],
 targets: [
     .target(name: "YourApp", dependencies: [
@@ -102,7 +103,7 @@ Details, the manual Xcode route, command-line tools and a project checklist:
 [Getting started](docs/getting-started.md).
 
 Prefer a folder you can vendor? Each release also attaches
-`ComOfficeKit-1.8.0.zip`: the frameworks, the fonts, the documentation and
+`ComOfficeKit-1.9.0.zip`: the frameworks, the fonts, the documentation and
 the samples, with a `Package.swift` that refers to the frameworks by path. As a
 path dependency it is named after its folder, `ComOfficeKit`, which is the
 `package:` name the guides in `docs/` use.
@@ -172,7 +173,7 @@ nothing currently checks which is which.
 - [`Sample-EnterpriseBatch`](Samples/Sample-EnterpriseBatch) — `batch render <file>` (→ PDF), `batch extract <file>` (DOCX text · XLSX TSV · PPTX notes), `batch convert <dir> --pdf <out>`; exit 1 on any failure, 3 on a licence error; key from `COMOFFICEKIT_KEY`. The pipeline shape.
 - [`Sample-Cookbook`](Samples/Sample-Cookbook) — every guide sample as a compiled function, plus `cookbook <file>` which runs the read-only ones against a document.
 
-All three consume the SDK exactly as a licensee does: binary only, no source. They are the acceptance test for every release. After cloning, run `Scripts/fetch-xcframeworks.sh` once: it downloads this release's frameworks into `XCFrameworks/`, where the samples expect them, and checks them against `Package.swift`.
+All three consume the SDK exactly as a licensee does: binary only, no source. They are the acceptance test for every release. Their source code is under the MIT License ([`Samples/LICENSE`](Samples/LICENSE)), so you may copy it into your own code; the SDK they call is licensed as [`LICENSE.md`](LICENSE.md) says. After cloning, run `Scripts/fetch-xcframeworks.sh` once: it downloads this release's frameworks into `XCFrameworks/`, where the samples expect them, and checks them against `Package.swift`.
 
 ## How we know it works
 

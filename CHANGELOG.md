@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+## 1.9.0 — 2026-11-16
+
+The samples' source code is now under the MIT License. Documents lay out and draw as in 1.8.0, and the API is
+unchanged: 1.9.0's new page-text API is in the .NET SDK for Windows and Linux. The evaluation key in the README
+works until 2027-01-01.
+
+- **The samples under the MIT License.** The source code in `Samples/` is under the MIT License
+  ([`Samples/LICENSE`](Samples/LICENSE)), so you may copy it into your own code. The SDK the samples call is licensed
+  as [`LICENSE.md`](LICENSE.md) says, and the service terms say the same.
+
 ## 1.8.0 — 2026-11-14
 
 Chinese, Japanese and Korean Word documents, and decks that use preset colours, are laid out and drawn more as

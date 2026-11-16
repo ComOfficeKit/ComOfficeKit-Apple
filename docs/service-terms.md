@@ -43,9 +43,10 @@ signed licence keys that the SDK verifies on the device.
 Nothing in these Terms grants a production licence or any right beyond the
 evaluation described in section 3.
 
-You may copy and modify the source code in the SDK's `Samples/` folder, and use
-it in your own applications, while you hold a valid licence or are evaluating
-under section 3.
+The source code in the SDK's `Samples/` folder is also licensed to you under
+the MIT License, in `Samples/LICENSE`: you may copy, modify and use it in your
+own applications under that licence. Using the SDK that the samples call still
+needs a valid licence or the evaluation under section 3.
 
 ## 3. Free evaluation
 
