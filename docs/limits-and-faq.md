@@ -8,6 +8,7 @@ Honest edges. Everything here is by design or measured, not guessed.
 |---|---|
 | Running VBA macros | never — `.xlsm` opens, edits and saves with the VBA project preserved byte for byte, and `WorkbookScene.hasMacros` tells you it is there |
 | `.doc` / `.xls` / `.ppt`, iWork | detected (`LegacyFormatDetector`), not parsed; ask the user to convert |
+| OpenDocument spreadsheets and presentations (`.ods`, `.odp`) | not read; OpenDocument text (`.odt`, `.ott`) is, and is written ([DOCX](guide-docx.md#save)) |
 | Password-protected / IRM-protected files | not supported |
 | PDF input | out of scope — the SDK reads and writes Office formats and *produces* PDF |
 | Dynamic arrays / spill, `LAMBDA`, external links | not evaluated; the cell keeps its cached value; `FormulaTelemetry.unknown` names unsupported functions |

@@ -2,6 +2,42 @@
 
 ## Unreleased
 
+## 1.12.0 — 2026-11-20
+
+OpenDocument text, Office's templates and Word's page colour. These frameworks had no 1.10.0 to 1.11.1
+release: their changes are here. Pages can break differently from 1.9.0, so a document's page count can
+change. Nothing in the API changes or goes away. The evaluation key in the README works until 2027-01-01.
+
+- **OpenDocument text.** `DocumentParser.parse(docxAt:)` reads `.odt` and `.ott`, and `DocumentWriter.save`
+  writes OpenDocument text to a destination named `.odt` or `.ott`. OpenDocument text does not carry
+  comments, tracked changes or drawing shapes here, so a save that would leave some out throws
+  `OpenDocumentLossError`, whose `loss` (`OpenDocumentLoss`) has the counts, and writes nothing;
+  `save(document:originalURL:destinationURL:acceptingOpenDocumentLoss:)` writes anyway.
+  [DOCX](docs/guide-docx.md#save) shows it.
+- **Templates.** `DocumentWriter`, `SpreadsheetWriter` and `SlideWriter` `.instantiateTemplate(at:to:)` make
+  a `.dotx`, `.xltx` or `.potx` into a new document to open and edit. A macro-enabled template throws
+  `TemplateInstantiationError`.
+- **Page colour.** A Word document's page colour (Word's Design ▸ Page Color) fills every page in page
+  images and in PDF, and a save keeps it. `WordPage.backgroundHex` has it for a host that draws pages
+  itself.
+- **Parts found the way the file names them.** Files that name their parts by absolute paths, as
+  Microsoft's own templates do, lost what those parts hold: a document its styles, numbering, headers and
+  footers; a workbook its charts, tables, pivot tables and theme colours; a deck its layouts, masters and
+  themes. They are read now, and kept on save. In one such workbook, cells typed before a save read back
+  as other text after it; that no longer happens.
+- **Word pages.** A table row that fits a page but not what is left of this one breaks at the page's foot,
+  as Word breaks it, keeping two lines of a paragraph on each side; a row that may not split but is taller
+  than a page starts a new page and carries on, where it was cut off; a picture on a line spaced at a
+  multiple of single is given that multiple of its text's height; moved text that is tracked shows as a
+  deletion and an insertion; lines in 仿宋 (FangSong) are as tall as Word sets them.
+- **Workbooks.** A save keeps a column's style, best-fit and outline attributes, cells you did not edit as
+  the file had them, and a chart's cached values, updated when you change the cells it draws.
+  `WorkbookSaveSync.syncedScene(scene:flatSheets:)` also takes the changed sheets alone, by index, and
+  leaves the others as their file has them. New functions: `SUMIFS`, `COUNTIFS`, `AVERAGEIFS`, `MAXIFS`,
+  `MINIFS` and `HYPERLINK`.
+- **Decks.** A shape's text takes its style's font colour, and pictures draw their transparency, duotone
+  and greyscale, on screen and in PDF.
+
 ## 1.9.0 — 2026-11-16
 
 The samples' source code is now under the MIT License. Documents lay out and draw as in 1.8.0, and the API is

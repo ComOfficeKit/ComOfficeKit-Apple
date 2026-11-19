@@ -243,6 +243,32 @@ and part from `originalURL` byte for byte and regenerates only the elements you
 changed (an edited run's `<w:rPr>`, an inserted table, a new media part with
 its relationship and content type). Save always needs the original file.
 
+**OpenDocument text.** `DocumentParser.parse(docxAt:)` also reads `.odt` and
+`.ott`, and a destination named `.odt` or `.ott` is written as OpenDocument
+text. OpenDocument text does not carry comments, tracked changes or drawing
+shapes here, so a save that would leave some out throws `OpenDocumentLossError`
+and writes nothing; its `loss` (`OpenDocumentLoss`) has the counts. Tell the
+user, then save again accepting it:
+
+```swift
+do {
+    try DocumentWriter.save(document: edited, originalURL: url, destinationURL: odt)
+} catch let error as OpenDocumentLossError {
+    // error.loss.comments, .trackedChanges, .shapes
+    try DocumentWriter.save(document: edited, originalURL: url, destinationURL: odt,
+                            acceptingOpenDocumentLoss: true)
+}
+```
+
+A scene keeps the ids of the package it was read from, which OpenDocument does
+not carry: save it again from that package, or from a `.docx` saved from it,
+not from the `.odt`.
+
+**Templates.** `DocumentWriter.instantiateTemplate(at:to:)` makes a `.dotx`
+into a new `.docx` to open and edit; the template itself is only read.
+`SpreadsheetWriter` and `SlideWriter` do the same for `.xltx` and `.potx`.
+A macro-enabled template throws `TemplateInstantiationError.macroEnabledTemplate`.
+
 ## Snapshot as JSON
 
 ```swift
