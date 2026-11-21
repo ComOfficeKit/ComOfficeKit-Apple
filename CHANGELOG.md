@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+## 1.12.1 — 2026-11-21
+
+A fix for a crash. A formula that gives a function too few arguments (`SUMIF`, `AVERAGEIF`, `COUNTIF` or
+`MATCH` with fewer than two, `INDEX` or `INDIRECT` with none, `RANK` with one) ended the app: in
+`Formula.evaluate` and `Formula.evaluateThrowing`, and in a recalculation through `WorkbookRecalc` or
+`WorkbookSaveSync.cellEditRecalculation`, as when a user types one into a cell and presses Return. It was a
+trap, not an error, so no `catch` saw it. Every earlier release has it. Such a formula is now `#VALUE!`, as
+other functions are when given too few arguments. Nothing in the API changes, and pages lay out as in
+1.12.0. The evaluation key in the README works until 2027-01-01.
+
 ## 1.12.0 — 2026-11-20
 
 OpenDocument text, Office's templates and Word's page colour. These frameworks had no 1.10.0 to 1.11.1
