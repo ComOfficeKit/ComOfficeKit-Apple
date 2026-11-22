@@ -2,6 +2,31 @@
 
 ## Unreleased
 
+## 1.13.0 — 2026-11-23
+
+Shapes inside groups that move, faster saves, and two fixes for text lost in Word documents. Nothing in the API
+changes or goes away. The evaluation key in the README works until 2027-01-01.
+
+- **Shapes inside groups.** `SlideShape.groupPath` names the groups a shape sits in, outermost first, and
+  `SlideScene.groups` lists a slide's groups (`SlideGroup`: `id`, `parentID`, `frame` on the slide,
+  `isRotatedOrFlipped`). A shape inside a group can now be moved and resized with
+  `replacingFrame(_:rotationDegrees:)`, and the save writes it into its group, which grows or shrinks to fit its
+  shapes as PowerPoint fits one. A whole group moves or resizes with `SlideScene.replacingGroups(_:)` and
+  `SlideGroup.replacingFrame(_:)`, its shapes staying where they are in it. A rotated or flipped group is left as
+  it is, so check `isRotatedOrFlipped` on a shape's groups before you offer to move it. Before, the save skipped
+  every shape inside a group, so a move there was lost.
+- **Saving is faster.** A save copies the parts it did not change as they are, no longer compresses pictures,
+  fonts, video and audio again, and writes the file as it goes: a save after one edit measured 3.3 to 3.7 times
+  faster on a Mac. A save that would pass 4 GB throws and writes nothing; before, it ended the app. A document
+  with an encrypted part, or one written as ZIP64, is refused with an error that names the reason; before, the
+  error said only that the file could not be decoded or was corrupt, and a part stored without compression
+  could be read as its encrypted bytes.
+- **Text typed right after an inline picture is saved.** Text inserted with `WordSceneEditor.insert(_:at:in:)`
+  where the caret stood right after a picture went into the picture's run and was dropped on save, with no
+  error. It now goes into a run of its own after the picture, and the picture keeps its XML.
+- **A document whose WordprocessingML is not bound to the `w:` prefix** (Python's ElementTree writes `ns0:`, for
+  one) was saved as XML that was not well-formed after any edit; it now saves well-formed.
+
 ## 1.12.1 — 2026-11-21
 
 A fix for a crash. A formula that gives a function too few arguments (`SUMIF`, `AVERAGEIF`, `COUNTIF` or
