@@ -2,6 +2,24 @@
 
 ## Unreleased
 
+## 1.15.0 — 2026-11-25
+
+A slide pasted from one presentation into another, and speaker notes kept on a new slide. One function is added;
+nothing in the API changes or goes away. The evaluation key in the README works until 2027-01-01.
+
+- **Paste a slide from another presentation.** `SlideParser.importingSlide(partName:from:into:after:slideNumber:)`
+  makes a slide of one deck a slide of another, as PowerPoint's "Use Destination Theme" pastes it. It takes the
+  destination's layout of the same type (else of the same name, else Title and Content) under the master of the
+  slide it follows, and the destination theme's colours and fonts; colours and fonts the slide sets itself stay, and
+  its own background gives way to its new master's. A slide of another size is scaled by the smaller of the two
+  ratios and centred, as PowerPoint fits one. Its pictures, charts, SmartArt, media, embedded objects and speaker
+  notes come with it; links to other slides of its deck, and its comments, do not. Put the slide it returns into the
+  deck's scenes and save as usual: the save writes it, and the parts it brings, under names the deck has free. It
+  needs a licence that allows reading presentations.
+- **Speaker notes of a new slide are saved.** A slide made with `LayoutTemplate.makeSlide(slideNumber:)` and given
+  notes with `replacingNotes(_:)` lost them at its first `SlideWriter.save` unless the slide was named in
+  `editedNotesSlideNumbers`. The save now writes them.
+
 ## 1.14.0 — 2026-11-24
 
 Faster workbook saves and three fixes in saved workbooks. Nothing in the API changes or goes away. The evaluation key in
