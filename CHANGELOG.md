@@ -2,6 +2,24 @@
 
 ## Unreleased
 
+## 1.14.0 — 2026-11-24
+
+Faster workbook saves and three fixes in saved workbooks. Nothing in the API changes or goes away. The evaluation key in
+the README works until 2027-01-01.
+
+- **Saving a workbook is faster.** `SpreadsheetWriter.save` leaves every sheet nobody edited exactly as the file had
+  it, and in an edited sheet writes only the rows whose cells changed, copying everything else as it is. The scene it
+  returns records what each part now holds, so a later save from that scene does the same. On a workbook with sheets
+  of 40,000 and 20,000 rows of numbers, in a release build on a Mac, a save after one edit took 0.18 to 0.29 s instead
+  of 1.5 to 2.7 s, and a save with no edit 0.05 to 0.07 s instead of 1.6 to 1.8 s.
+- **Conditional formatting over a `$` range is kept.** A rule whose range uses `$` (as in `$A33:$XFD33`) was not read,
+  so every save that wrote its sheet dropped it.
+- **A workbook whose SpreadsheetML is bound to a prefix** (`<x:worksheet>`, as some tools write it): a cell or a style
+  that a save added was written in no namespace, so Excel did not read it. What a save adds now takes the part's
+  prefix.
+- **A cell's style is no longer added again on each save.** Each save that wrote a cell's row appended the cell's
+  `<xf>` to the styles once more.
+
 ## 1.13.0 — 2026-11-23
 
 Shapes inside groups that move, faster saves, and two fixes for text lost in Word documents. Nothing in the API
