@@ -2,6 +2,26 @@
 
 ## Unreleased
 
+## 1.16.0 — 2026-11-26
+
+Flipped shapes, and flipped or rotated groups, in presentations are drawn as PowerPoint draws them. Three members are
+added; nothing in the API changes or goes away. The evaluation key in the README works until 2027-01-01.
+
+- **New: `SlideShape.flipH` and `SlideShape.flipV`.** The shape is drawn mirrored, left to right or top to bottom,
+  about its frame's centre, before its turn. **`SlideShape.textIsUpsideDown`:** its text is drawn upside down, which
+  is a top-to-bottom flip on any shape but a SmartArt label. A line keeps its flips in its connector, as before. If you
+  draw slides on your own canvas, read these three to draw as `SlidePagePainter` does.
+- **A flipped or rotated group takes its shapes with it.** `SlideParser` now gives a shape inside such a group the
+  frame and turn PowerPoint gives it: its centre goes where the group's flip and turn take it, its own turn composes
+  with the group's, and groups inside groups compose too. Until now such a shape was drawn, and reported, where it
+  would be if its group were neither flipped nor turned. A rotated or flipped group is still left as it is when
+  saved, so check `isRotatedOrFlipped` on a shape's groups before you offer to move it.
+- **A shape flipped on its own is drawn mirrored:** an arrow points the other way, a picture is mirrored. Text is
+  never mirrored: a shape flipped top to bottom has its text upside down, except a SmartArt label. A shadow is not
+  flipped with its shape, and a table or a chart is never mirrored. A save keeps every shape's flips.
+- Checked against PowerPoint on 12 slides of flipped, rotated and nested groups: every shape's position, size and
+  turn equal PowerPoint's.
+
 ## 1.15.0 — 2026-11-25
 
 A slide pasted from one presentation into another, and speaker notes kept on a new slide. One function is added;
